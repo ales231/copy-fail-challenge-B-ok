@@ -124,3 +124,45 @@ Esta v2 incorpora los siguientes fixes respecto a la v1:
 - BusyBox: deshabilitado `CONFIG_TC` (rompe compilación con kernels nuevos)
 - BusyBox: forzado `CONFIG_STATIC=y` y verificado con `file`
 - Workflow Actions: greps de verificación con `|| echo`, tolerantes
+
+
+history
+ 1  git config --global user.name "ales231"
+    2  git config --global user.email "alalbanto@uide.edu.ec"
+    3  make setup
+    4  make qemu
+    5  make setup
+    6  apt install -y file
+    7  apt-get update
+    8  git config --global user.name "ales231"
+    9  git config --global user.email "alalbanto@uide.edu.ec"
+   10  git config --global user.name
+   11  git config --global user.email
+   12  apt-get install -y file libmagic1
+   13  command -v file
+   14  file --version
+   15  make setup
+   16  apt-get install -y file libmagic1
+   17  command -v file
+   18  file --version
+   19  make setup
+   20  ls /
+   21  lsmod
+   22  mkdir -p evidence patches
+   23  {   echo "=== SETUP COMPLETADO SIN QEMU ===";   echo "Fecha: $(date)";   echo "Repositorio: $(pwd)";   echo "STUDENT_ID: $(git config --global user.name)";   echo "Email Git: $(git config --global user.email)";   echo "";   echo "=== Archivos generados ===";   ls -lh kernel/build/initramfs.cpio.gz 2>/dev/null || echo "No se encontró initramfs";   ls -lh kernel/build 2>/dev/null | head -20;   echo "";   echo "=== Estado Git ===";   git status --short; } > evidence/setup_completed_host.txt
+   24  cat evidence/setup_completed_host.txt
+   25  git status
+   26  find . -maxdepth 4 -type f -name "*.py" -print
+   27  find . -maxdepth 4 -type f | sort
+   28  grep -RIn "python3\|python \|verify\|grade\|hito\|qemu\|patched\|copy_fail" README.md Makefile scripts .github 2>/dev/null
+   29  make help 2>/dev/null || cat Makefile
+   30  make info
+   31  echo "=== ARCHIVOS DEL RETO ==="
+   32  find . -maxdepth 3 -type f | sort
+   33  echo ""
+   34  echo "=== OBJETIVOS DEL MAKEFILE ==="
+   35  grep -n "^[a-zA-Z0-9_-]*:" Makefile
+   36  echo ""
+   37  echo "=== SCRIPTS DISPONIBLES ==="
+   38  ls -la scripts
+   39  history

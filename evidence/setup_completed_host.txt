@@ -1,0 +1,14 @@
+=== SETUP COMPLETADO SIN QEMU ===
+Fecha: Mon May 11 13:42:28 UTC 2026
+Repositorio: /workspaces/copy-fail-challenge-B-ok
+STUDENT_ID: ales231
+Email Git: alalbanto@uide.edu.ec
+
+=== Archivos generados ===
+-rw-rw-rw- 1 root root 1.3M May 11 13:40 kernel/build/initramfs.cpio.gz
+total 2.7M
+-rw-rw-rw- 1 root root 1.4M May 11 13:28 bzImage_vuln
+-rw-rw-rw- 1 root root 1.3M May 11 13:40 initramfs.cpio.gz
+
+=== Estado Git ===
+?? evidence/
