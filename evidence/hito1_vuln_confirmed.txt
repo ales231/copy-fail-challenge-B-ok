@@ -1,0 +1,19 @@
+=== HITO 1: KERNEL VULNERABLE CONFIRMADO ===
+
+Evidencia obtenida dentro de QEMU:
+
+Hostname: copy-fail-ales231
+Kernel: 6.12.0
+Identidad: uid=1001(student) gid=1001(student) groups=1001(student)
+Usuario: student
+
+Verificación de configuración del kernel:
+# CONFIG_MODULES is not set
+CONFIG_CRYPTO_USER_API=y
+CONFIG_CRYPTO_USER_API_AEAD=y
+CONFIG_CRYPTO_USER_API_SKCIPHER=y
+
+Nota técnica:
+En esta imagen del kernel, /proc/modules no existe porque CONFIG_MODULES no está habilitado.
+AF_ALG/AEAD sí está disponible como built-in porque CONFIG_CRYPTO_USER_API=y y CONFIG_CRYPTO_USER_API_AEAD=y.
+Por eso no aparece algif_aead en lsmod, ya que no fue compilado como módulo .ko.
