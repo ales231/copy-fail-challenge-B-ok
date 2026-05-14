@@ -1,0 +1,29 @@
+=== HITO 2: EXPLOTACIÓN EXITOSA ===
+
+Usuario inicial dentro de la VM:
+student
+
+Comando ejecutado:
+python3 copy_fail_exp.py
+
+Resultado esperado:
+Se obtiene una shell con privilegios de root, identificada por el símbolo #.
+
+Evidencia obtenida:
+
+# id
+uid=0(root) gid=0(root) groups=0(root)
+
+# whoami
+root
+
+Kernel vulnerable:
+6.12.0
+
+Descripción técnica:
+El exploit copy_fail_exp.py fue ejecutado dentro de la VM QEMU como usuario student.
+Después de ejecutar el PoC, el sistema permitió obtener una shell root.
+Esto confirma la escalación de privilegios local en el entorno vulnerable del laboratorio.
+
+Conclusión:
+El Hito 2 fue completado exitosamente porque se logró pasar de un usuario sin privilegios a root.
