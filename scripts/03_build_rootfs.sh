@@ -99,6 +99,33 @@ echo "  ╚═══════════════════════
 echo ""
 
 # Login como student (sin privilegios) para simular el escenario LPE
+mkdir -p /proc /sys /dev /etc
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+
+# Red QEMU user-mode NAT
+ifconfig lo 127.0.0.1 up 2>/dev/null || true
+ifconfig eth0 10.0.2.15 netmask 255.255.255.0 up 2>/dev/null || true
+route add default gw 10.0.2.2 eth0 2>/dev/null || true
+
+# DNS de QEMU user-mode
+echo "nameserver 10.0.2.3" > /etc/resolv.conf
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+mkdir -p /proc /sys /dev /etc
+
+mount -t proc proc /proc 2>/dev/null || true
+mount -t sysfs sysfs /sys 2>/dev/null || true
+
+# Red QEMU user-mode NAT
+/bin/busybox ifconfig lo 127.0.0.1 up 2>/dev/null || true
+/bin/busybox ifconfig eth0 10.0.2.15 netmask 255.255.255.0 up 2>/dev/null || true
+/bin/busybox route add default gw 10.0.2.2 2>/dev/null || true
+
+# DNS
+echo "nameserver 10.0.2.3" > /etc/resolv.conf
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+chmod 644 /etc/resolv.conf
+
 exec /bin/su - student
 INITEOF
 chmod +x "$INITRAMFS_DIR/init"

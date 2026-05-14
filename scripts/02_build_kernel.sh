@@ -58,6 +58,17 @@ make tinyconfig
 ./scripts/config --enable NET
 ./scripts/config --enable UNIX
 ./scripts/config --enable INET
+# ── Driver de red para QEMU virtio-net ─────────────────────────────────────
+./scripts/config --enable PCI
+./scripts/config --enable PCI_MSI
+./scripts/config --enable NETDEVICES
+./scripts/config --enable ETHERNET
+./scripts/config --enable PACKET
+./scripts/config --enable VIRTIO
+./scripts/config --enable VIRTIO_MENU
+./scripts/config --enable VIRTIO_PCI
+./scripts/config --enable VIRTIO_PCI_LEGACY
+./scripts/config --enable VIRTIO_NET
 
 # ── Subsistema CRYPTO (la parte vulnerable) ────────────────────────────────
 ./scripts/config --enable CRYPTO
@@ -74,6 +85,12 @@ make tinyconfig
 
 # ── Usuarios (setuid binaries para LPE) ────────────────────────────────────
 ./scripts/config --enable MULTIUSER
+./scripts/config --enable FUTEX
+./scripts/config --enable FUTEX_PI
+./scripts/config --enable EPOLL
+./scripts/config --enable EVENTFD
+./scripts/config --enable SIGNALFD
+./scripts/config --enable TIMERFD
 
 make olddefconfig
 
