@@ -1,19 +1,40 @@
 === HITO 1: KERNEL VULNERABLE CONFIRMADO ===
 
-Evidencia obtenida dentro de QEMU:
-
+Fecha: 14/05/2026
+Entorno: Máquina virtual QEMU dentro de GitHub Codespaces
 Hostname: copy-fail-ales231
 Kernel: 6.12.0
-Identidad: uid=1001(student) gid=1001(student) groups=1001(student)
-Usuario: student
 
-Verificación de configuración del kernel:
-# CONFIG_MODULES is not set
-CONFIG_CRYPTO_USER_API=y
-CONFIG_CRYPTO_USER_API_AEAD=y
-CONFIG_CRYPTO_USER_API_SKCIPHER=y
+=== Usuario inicial ===
 
-Nota técnica:
-En esta imagen del kernel, /proc/modules no existe porque CONFIG_MODULES no está habilitado.
-AF_ALG/AEAD sí está disponible como built-in porque CONFIG_CRYPTO_USER_API=y y CONFIG_CRYPTO_USER_API_AEAD=y.
-Por eso no aparece algif_aead en lsmod, ya que no fue compilado como módulo .ko.
+Comando ejecutado:
+id
+
+Resultado:
+uid=1001(student) gid=1001(student) groups=1001(student)
+
+Comando ejecutado:
+whoami
+
+Resultado:
+student
+
+=== Verificación del kernel ===
+
+Comando ejecutado:
+uname -r
+
+Resultado:
+6.12.0
+
+=== Verificación de componentes relacionados ===
+
+Durante la revisión del entorno se comprobó que la máquina virtual estaba ejecutando el kernel vulnerable solicitado por el laboratorio.
+
+En este entorno, algunos componentes no aparecieron como módulos cargados mediante /proc/modules o lsmod, debido a que el kernel puede tener funcionalidades compiladas directamente dentro del kernel y no como módulos descargables.
+
+=== Conclusión ===
+
+El Hito 1 fue completado correctamente porque se confirmó que la máquina virtual QEMU arrancó con el kernel vulnerable 6.12.0 y que el usuario inicial era student, es decir, un usuario sin privilegios.
+
+Esto permitió continuar con la fase de explotación del laboratorio.

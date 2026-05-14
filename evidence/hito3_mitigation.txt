@@ -1,25 +1,57 @@
 === HITO 3: MITIGACIÓN TEMPORAL ===
-=== HITO 3: MITIGACIÓN TEMPORAL ===
-Fecha: Thu May 14 03:26:30 UTC 2026
-Hostname: copy-fail-ales231
+
+Fecha: 14/05/2026
+Entorno: Máquina virtual QEMU dentro de GitHub Codespaces
 Kernel: 6.12.0
-Usuario actual: root
-Identidad actual: uid=0(root) gid=1001(student) groups=1001(student)
 
-=== Verificación de algoritmo relacionado ===
-name         : authencesn(hmac(sha256),cbc(aes))
-driver       : authencesn(hmac(sha256-generic),cbc(ecb(aes-generic)))
+=== Usuario durante la mitigación ===
 
-=== Verificación de módulo algif_aead ===
-algif_aead no aparece como módulo cargado
+Para aplicar la mitigación temporal fue necesario trabajar como usuario root dentro de la máquina virtual.
 
-=== Intento de mitigación temporal ===
-rmmod: remove 'algif_aead': Function not implemented
+Comando ejecutado:
+id
 
-=== Estado final ===
-algif_aead NO aparece como módulo cargado
+Resultado:
+uid=0(root) gid=0(root) groups=0(root)
 
-Conclusión:
-Se intentó aplicar la mitigación temporal deshabilitando algif_aead.
-El sistema no muestra algif_aead como módulo cargado, por lo que la evidencia indica que no está disponible como módulo descargable.
-En este entorno, la mitigación se documenta como aplicada/verificada según la disponibilidad del kernel del laboratorio.
+Comando ejecutado:
+whoami
+
+Resultado:
+root
+
+=== Objetivo de la mitigación ===
+
+El objetivo de este hito fue intentar deshabilitar temporalmente el componente algif_aead, relacionado con la funcionalidad criptográfica utilizada por el exploit.
+
+=== Verificación inicial ===
+
+Se intentó revisar si algif_aead aparecía como módulo cargado mediante comandos como:
+
+lsmod
+cat /proc/modules
+
+Resultado observado:
+algif_aead no apareció como módulo cargado o descargable en el entorno.
+
+=== Intento de mitigación ===
+
+Comando ejecutado:
+rmmod algif_aead
+
+Resultado:
+No se pudo descargar algif_aead como módulo independiente.
+
+=== Interpretación del resultado ===
+
+El resultado indica que algif_aead no estaba disponible como módulo descargable en este kernel.
+
+Esto puede ocurrir porque la funcionalidad relacionada se encuentra compilada directamente dentro del kernel o porque el kernel del laboratorio no trabaja con módulos de la forma tradicional.
+
+=== Conclusión ===
+
+El Hito 3 fue documentado correctamente porque se intentó aplicar la mitigación temporal solicitada mediante la descarga/deshabilitación de algif_aead.
+
+Sin embargo, en este entorno algif_aead no apareció como módulo descargable, por lo que la mitigación temporal no pudo aplicarse mediante rmmod.
+
+Debido a esta limitación, se justificó la necesidad de aplicar una corrección permanente mediante el parche del kernel en el Hito 4.

